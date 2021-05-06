@@ -73,39 +73,25 @@ int main(void) {
 	return 0;
 }
 
+typedef enum {
+	MENU_UNDEFINED = 0,
+	MENU_REHEAT = 1,
+	MENU_MAKECOFFEE,
+	MENU_SHUTDOWN
+} MenuItem;
 
-
-static int heatingCounter = 0;
-int heatingLimit = 10;
-
-// returns 1 if heating done, 0 otherwise.
-int HeatingDone(void){
-	int done = 0;
-	//sleep(1);  // sleep for 1 s.
- 	usleep(500000);  // sleep n microsecond
-	printf("#");
-	fflush(stdout);
-	heatingCounter++;
-	if(heatingCounter >= heatingLimit)
-	{
-		// reset the counter!! 
-		heatingCounter = 0;
-		done = 1;
-		printf(" Heating Completed.\n");
-	}
-	return done;
-}
-	
 
 
 void ShowMenu(void ){
-	int menuSelected = 0;
+	MenuItem menuSelected = MENU_UNDEFINED;
+	int menuInput = 0;
 	printf("Select from the following Options:\n");
 	printf("1:  Re-heat\n");
 	printf("2:  Make Coffee\n");
 	printf("9: shutdown\n");
 	// blocking read!!
-	scanf("%d", &menuSelected);
+	scanf("%d", &menuInput);
+	menuSelected = (MenuItem)menuInput;
 	switch(menuSelected)
 	{
 		case 1:
@@ -137,6 +123,32 @@ void ShowMenu(void ){
 	}
 	*/
 }	
+
+
+
+
+static int heatingCounter = 0;
+int heatingLimit = 10;
+
+// returns 1 if heating done, 0 otherwise.
+int HeatingDone(void){
+	int done = 0;
+	//sleep(1);  // sleep for 1 s.
+ 	usleep(500000);  // sleep n microsecond
+	printf("#");
+	fflush(stdout);
+	heatingCounter++;
+	if(heatingCounter >= heatingLimit)
+	{
+		// reset the counter!! 
+		heatingCounter = 0;
+		done = 1;
+		printf(" Heating Completed.\n");
+	}
+	return done;
+}
+	
+
 
 
 
