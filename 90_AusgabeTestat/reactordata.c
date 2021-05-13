@@ -1,61 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
  
-struct {
+typedef struct inputdata {
  	long long timestamp;
 	int pressure;
 	char systemState;
 	char alarmState;
-	} dataRecord;
+	} inputdata_t;
 	
+
 
 int main()
 {
-	
-	/*char readDate[] = "pressureSpike.bin";
-	char writeOnly[] = "reactor_Data.csv";
-	FILE *binp;
-	FILE *csv;*/
-	
-	
-	//csv = fopen(writeOnly, "w");
-	
+	inputdata_t dataRecord;
 	
 	FILE *input = fopen("pressureSpike.bin", "rb");
+	FILE *output = fopen("pressureSpike.csv", "w" );
+	
 	if (NULL == input) {
         	perror("File opening failed");
         	return EXIT_FAILURE;
         }
 	else {
-		//while (fread(&dataRecord, sizeof(dataRecord), 1, input) == 1) {
 		while(!feof(input)){
-		fread(&reactor_data.timeStamp, sizeof(long long), 1, input);
-		fread(&reactor_data.pressure, sizeof(int), 1, input);
-		fread(&reactor_data.systemState, sizeof(char), 1, input);
-		fread(&reactor_data.alarmState, sizeof(char), 1, input);
-		
-		
-		
-			printf(" %lld\t", dataRecord.timestamp);
-			printf(" %d\t", dataRecord.pressure);
-			printf(" %d\t", dataRecord.systemState);
-			printf(" %d\n", dataRecord.alarmState);
+			fread(&dataRecord.timestamp, sizeof(long long), 1, input);
+			fread(&dataRecord.pressure, sizeof(int), 1, input);
+			fread(&dataRecord.systemState, sizeof(char), 1, input);
+			fread(&dataRecord.alarmState, sizeof(char), 1, input);
+			
+			fprintf(output, " %lld; %d; %d; %d\n",  dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
+			
+			printf(" %lld; %d; %d; %d\n",  dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
+			
 		}
 	}
-	
-	
-  /*  int c;								// note: int, not char, required to handle EOF
-    while ((c = fgetc(binp)) != EOF) { 	// standard C I/O file reading loop
-       putchar(c);
-       
-       printf("%lld\n", reactorData.timestamp);
-       /*
-       fread(&reactorData.timestamp, 8, 1, binp);
-       fread(&reactorData.pressure, 4, 1, binp);
-       fread(&reactorData.systemState, 1, 1, binp);
-       fread(&reactorData.alarmState, 1, 1, binp);
-       printf( " %lld; %d; %d; %d\n",  reactorData.timestamp, reactorData.pressure, reactorData.systemState, reactorData.alarmState);
-       */
+	fclose(input);
+	fclose(output);
+
 	return 0;
 }	
     

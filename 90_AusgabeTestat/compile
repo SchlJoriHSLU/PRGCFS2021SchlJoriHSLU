@@ -1,3 +1,2 @@
 #!/bin/bash
 gcc reactordata.c -o reactor
-./reactor
