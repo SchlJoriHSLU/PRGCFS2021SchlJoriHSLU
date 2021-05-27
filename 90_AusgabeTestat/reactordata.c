@@ -23,14 +23,21 @@ int main()
         }
 	else {
 		while(!feof(input)){
-			fread(&dataRecord.timestamp, sizeof(long long), 1, input);
-			fread(&dataRecord.pressure, sizeof(int), 1, input);
-			fread(&dataRecord.systemState, sizeof(char), 1, input);
-			fread(&dataRecord.alarmState, sizeof(char), 1, input);
+			fread(&dataRecord.timestamp, 8, 1, input);
+			fread(&dataRecord.pressure, 4, 1, input);
+			fread(&dataRecord.systemState, 1, 1, input);
+			fread(&dataRecord.alarmState, 1, 1, input);
 			
-			fprintf(output, " %lld; %d; %d; %d\n",  dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
 			
-			printf(" %lld; %d; %d; %d\n",  dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
+			//char pump2 = &dataRecord.systemState>>3;
+			//char pump1 = &dataRecord.systemState>>3;
+			//char outletValve = &dataRecord.systemState>>3;
+			//char inletValve = &dataRecord.systemState>>3;
+			
+			//fprintf(output, " %lld; %d; %d; %d\n",  dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
+			
+			printf(" %lld; %d; %d; %d;\n", dataRecord.timestamp, dataRecord.pressure, dataRecord.systemState, dataRecord.alarmState);
+
 			
 		}
 	}
